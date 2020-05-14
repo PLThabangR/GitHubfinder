@@ -1,48 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
 import UserItem from './UserItem';
+import Spinner from '../Layout/spinner'
+import PropTypes from 'prop-types';
 
-
- class Users extends Component {
-     state={
-         users:[
-            {
-                id:'1',
-                name: "aGameOfSnake",
-                avatar_url: "https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg",
-                url: "https://api.github.com/users/ethanboxx",
-                bio: "17 years old - Student",
-    
-            },
-            {
-                id:'2',
-                name: "aGameOfSnake",
-                avatar_url: "https://avatars2.githubusercontent.com/u/8074468?v=4",
-                url: "https://api.github.com/users/ethanboxx",
-                bio: "17 years old - Student",
-    
-            },
-            {
-                id:'3',
-                name: "aGameOfSnake",
-                bio: "17 years old - Student ",
-                avatar_url: "https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg",
-                url: "https://api.github.com/users/ethanboxx",
-    
-            }
-
-         ]
-     }
-    render() {
+ const Users =({users,loading})=> {
+   
+    if(loading=false){
+        return <Spinner/>
+    }else{
         return (
             <div style={userStyle}>
-                {this.state.users.map(user =>(
+                {users.map(user =>(
                     <UserItem key={user.id} user={user} />
                 ))}
             </div>
-        )
+        );
     }
-}
 
+       
+    }
+
+    // Users.PropTypes= {
+    //     users:PropTypes.array.isRequired,
+    //     loading:Prototype.bool.isRequired
+    // }
 const userStyle ={
     display:'grid',
     gridTemplateColumns:'repeat(3,1fr)',
