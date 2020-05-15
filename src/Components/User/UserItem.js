@@ -8,9 +8,9 @@ const CardExample = ({user}) => {
       <MDBCard>
         <MDBCardImage className="img-fluid" src={user.avatar_url} waves />
         <MDBCardBody>
-          <MDBCardTitle>{user.name}</MDBCardTitle>
+          <MDBCardTitle>{user.login}</MDBCardTitle>
           <MDBCardText>{user.bio}</MDBCardText>
-          <MDBBtn href={user.url} >Click</MDBBtn>
+          <MDBBtn href={user.html_url} >More info</MDBBtn>
         </MDBCardBody>
       </MDBCard>
     </MDBCol>

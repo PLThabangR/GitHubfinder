@@ -1,11 +1,11 @@
 import React from 'react'
 import UserItem from './UserItem';
 import Spinner from '../Layout/spinner'
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
  const Users =({users,loading})=> {
    
-    if(loading=false){
+    if(loading){
         return <Spinner/>
     }else{
         return (
