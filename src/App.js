@@ -3,12 +3,14 @@ import "./index.css";
 import Navbar from "./Components/Layout/Navbar";
 import Users from "./Components/User/Users";
 import axios from 'axios';
-import Search from './Components/User/Search'
+import Search from './Components/User/Search';
+import Alert from './Components/Layout/Alert';
 class App extends Component {
  
   state ={
     users:[],
-    loading: false
+    loading: false,
+    alert:null
   }
 async componentDidMount(){
  
@@ -27,17 +29,32 @@ searchUsers =async text=>{
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
   console.log(res.data)
    this.setState({users:res.data.items,loading:false});
+
 }
 
+clearUsers=()=>{
+
+  this.setState({users:[],loading:false})
+}
+
+setAlert =(msg)=>{
+ this.setState({alert:{msg}})
+
+ setTimeout(()=> this.setState({alert:null}),5000)
+}
   render() {
-   
+   const {users,loading,alert} =this.state;
     return (
       <Fragment>
       <Navbar  title="Github finder"/>
-      <Search searchUsers={this.searchUsers}/>
+      <Alert alert={alert}/>
+      <Search searchUsers={this.searchUsers}  clearUsers={this.clearUsers} 
+      showClear={users.length>0 ?true:false}
+      setAlert={this.setAlert}
+      />
       <div className="container mt-2">
      
-           <Users users={this.state.users} loading={this.state.loading}  />
+           <Users users={users} loading={loading}  />
        </div>
       </Fragment>
     );

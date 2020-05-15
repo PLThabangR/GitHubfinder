@@ -11,12 +11,18 @@ this.setState({[e.target.name]:e.target.value});
 }
 
 onSubmit =(e)=>{
+  if(this.state.text===''){
+    this.props.setAlert('Please enter something')
+  }else{
     e.preventDefault();
     this.props.searchUsers(this.state.text);
     this.setState({text:''});
 }
+}
+
 
 render(){
+  const {showClear,clearUsers} =this.props;
 return (
 <MDBContainer>
   <MDBRow>
@@ -35,6 +41,18 @@ return (
           </MDBBtn>
         </div>
       </form>
+      <br></br>
+      {showClear && (
+
+        <div className="text-center">
+        <MDBBtn block outline color="info"  onClick={clearUsers}>
+          Clear
+          <MDBIcon far icon="window-minimize"  className="ml-1" />
+        </MDBBtn>
+      </div>
+      )}
+     
+
     </MDBCol>
   </MDBRow>
 </MDBContainer>

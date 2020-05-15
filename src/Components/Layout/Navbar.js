@@ -16,7 +16,7 @@ render() {
     <Router>
       <MDBNavbar color="default-color" dark expand="md">
         <MDBNavbarBrand>
-          <strong className="white-text">Navbar</strong>
+          <strong className="white-text">GitHub finder</strong>
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
