@@ -11,10 +11,12 @@ this.setState({[e.target.name]:e.target.value});
 }
 
 onSubmit =(e)=>{
+  e.preventDefault();
   if(this.state.text===''){
+    console.log("stiil in de alert")
     this.props.setAlert('Please enter something')
   }else{
-    e.preventDefault();
+   
     this.props.searchUsers(this.state.text);
     this.setState({text:''});
 }

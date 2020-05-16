@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBIcon } from "mdbreact";
-import { BrowserRouter as Router } from 'react-router-dom';
 
+import {BrowserRouter as Router} from 'react-router-dom'
 class NavbarPage extends Component {
 state = {
   isOpen: false
@@ -13,7 +13,7 @@ toggleCollapse = () => {
 
 render() {
   return (
-    <Router>
+  
       <MDBNavbar color="default-color" dark expand="md">
         <MDBNavbarBrand>
           <strong className="white-text">GitHub finder</strong>
@@ -22,10 +22,10 @@ render() {
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
           <MDBNavbarNav left>
             <MDBNavItem active>
-              <MDBNavLink to="#!">Home</MDBNavLink>
+              <MDBNavLink to="/">Home</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="#!">Features</MDBNavLink>
+              <MDBNavLink to="/About">About</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="#!">Pricing</MDBNavLink>
@@ -49,7 +49,7 @@ render() {
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>
-    </Router>
+  
     );
   }
 }

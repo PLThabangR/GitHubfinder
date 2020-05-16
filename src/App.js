@@ -5,6 +5,8 @@ import Users from "./Components/User/Users";
 import axios from 'axios';
 import Search from './Components/User/Search';
 import Alert from './Components/Layout/Alert';
+import About from './Components/Pages/About'
+import  {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 class App extends Component {
  
   state ={
@@ -21,13 +23,13 @@ client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
  this.setState({users:res.data,loading:false});
 }
 
-searchUsers =async text=>{
-  console.log(text)
+searchUsers =async userName=>{
+  
   this.setState({loading:true})
 
-  const res= await axios.get(`https://api.github.com/search/users?q=${text}&cleint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
+  const res= await axios.get(`https://api.github.com/search/users?q=${userName}&cleint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-  console.log(res.data)
+  
    this.setState({users:res.data.items,loading:false});
 
 }
@@ -45,18 +47,33 @@ setAlert =(msg)=>{
   render() {
    const {users,loading,alert} =this.state;
     return (
+
+      <Router>
       <Fragment>
       <Navbar  title="Github finder"/>
-      <Alert alert={alert}/>
-      <Search searchUsers={this.searchUsers}  clearUsers={this.clearUsers} 
-      showClear={users.length>0 ?true:false}
-      setAlert={this.setAlert}
-      />
-      <div className="container mt-2">
      
-           <Users users={users} loading={loading}  />
+     
+      <div className="container mt-2">
+     <Switch>
+     <Route exact path='/' render={props=>(
+       <Fragment>
+       <Alert alert={alert}/>
+       <Search searchUsers={this.searchUsers}  clearUsers={this.clearUsers} 
+       showClear={users.length>0 ?true:false}
+       setAlert={this.setAlert}
+       />
+      <Users users={users} loading={loading}  />
+      </Fragment>)}/>
+
+      <Route
+        exact
+        path='/About' component={About}
+      />
+     </Switch>
+         
        </div>
       </Fragment>
+      </Router>
     );
   }
 }
