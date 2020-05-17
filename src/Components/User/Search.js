@@ -51,7 +51,9 @@ return (
           Clear
           <MDBIcon far icon="window-minimize"  className="ml-1" />
         </MDBBtn>
+        <br></br>
       </div>
+      
       )}
      
 
