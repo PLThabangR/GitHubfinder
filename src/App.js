@@ -42,6 +42,7 @@ getSingleUser =async (userName) =>{
   const res= await axios.get(`https://api.github.com/users/${userName}?&cleint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
   
+  console.log(res.data)
    this.setState({user:res.data,loading:false});
 }
 
