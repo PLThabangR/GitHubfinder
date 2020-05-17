@@ -14,7 +14,8 @@ class App extends Component {
     users:[],
     user:{},
     loading: false,
-    alert:null
+    alert:null,
+    repos:[]
   }
 async componentDidMount(){
  
@@ -24,12 +25,12 @@ client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
 
  this.setState({users:res.data,loading:false});
 }
-
+//Get users
 searchUsers =async userName=>{
   
   this.setState({loading:true})
 
-  const res= await axios.get(`https://api.github.com/search/users?q=${userName}&cleint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
+  const res= await axios.get(`https://api.github.com/search/users?q=${userName}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
   
    this.setState({users:res.data.items,loading:false});
@@ -39,13 +40,25 @@ searchUsers =async userName=>{
 getSingleUser =async (userName) =>{
   this.setState({loading:true})
 
-  const res= await axios.get(`https://api.github.com/users/${userName}?&cleint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
+  const res= await axios.get(`https://api.github.com/users/${userName}?&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
   
   console.log(res.data)
    this.setState({user:res.data,loading:false});
 }
 
+//get each users repository details
+getUserRepos =async (userName) =>{
+  this.setState({loading:true})
+
+  const res= await axios.get(`https://api.github.com/users/${userName}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
+  client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+  
+  console.log(res.data)
+   this.setState({repos:res.data,loading:false});
+}
+
+//Clear state values
 clearUsers=()=>{
 
   this.setState({users:[],loading:false})
@@ -57,7 +70,7 @@ setAlert =(msg)=>{
  setTimeout(()=> this.setState({alert:null}),5000)
 }
   render() {
-   const {users,loading,alert,user} =this.state;
+   const {users,loading,alert,user,repos} =this.state;
     return (
 
       <Router>
@@ -84,7 +97,8 @@ setAlert =(msg)=>{
 
       <Route exact path='/User/:login' render={props =>(
         <User {...props } getSingleUser={this.getSingleUser} user={user}
-        loading={loading}/>
+        loading={loading} getUserRepos={this.getUserRepos}
+        repos={repos}/>
       )}/>
      </Switch>
          
