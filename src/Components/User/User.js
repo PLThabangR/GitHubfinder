@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBView, MDBIcon } from 'mdbreact';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBView, MDBIcon } from 'mdbreact';
 import Spinner from "./../Layout/spinner";
 import {Link} from 'react-router-dom';
 import Repos from '../Repos/Repos';
-import { MDBBadge, MDBContainer } from "mdbreact";
+import { MDBBadge } from "mdbreact";
 export class User extends Component {
   
   componentDidMount(){
@@ -29,6 +29,7 @@ export class User extends Component {
             hiraeble
         } = this.props.user;
 
+    
 
         const {loading} =this.props.loading;
            
@@ -124,7 +125,8 @@ export class User extends Component {
             
               </MDBCardBody>
               </MDBCard>
-              <Repos/>
+              <br></br>
+              <Repos repos={this.props.repos}/>
             </Fragment>
         )
     }

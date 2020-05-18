@@ -1,12 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import RepoItem from './RepoItem'
 
 
 const Repos = ({repos}) => {
-    return (
-    <Fragment>
-  
-         </Fragment>)
+    return repos.map(repo => <RepoItem  repo={repo} key={repo.id}/> )
 }
 
 export default Repos
