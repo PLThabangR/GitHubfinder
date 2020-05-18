@@ -1,39 +1,33 @@
-import React,{Component} from "react";
+import React, {useState} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBInput } from 'mdbreact';
 
-class FormPage extends Component {
-state={
-    text:''
-};
+const FormPage =({showClear,searchUsers,clearUsers,setAlert})=> {
+
+  const[text,setText] =useState('');
  
-onChange=(e)=>{
-this.setState({[e.target.name]:e.target.value});
+const onChange=(e)=>{
+setText(e.target.value);
 }
 
-onSubmit =(e)=>{
+const onSubmit =(e)=>{
   e.preventDefault();
-  if(this.state.text===''){
-    console.log("stiil in de alert")
-    this.props.setAlert('Please enter something')
+  if(text===''){
+    setAlert('Please enter something');
   }else{
-   
-    this.props.searchUsers(this.state.text);
-    this.setState({text:''});
+    searchUsers(text);
+    setText('');
 }
 }
 
-
-render(){
-  const {showClear,clearUsers} =this.props;
 return (
 <MDBContainer>
   <MDBRow>
     <MDBCol md="12">
-      <form  onSubmit={this.onSubmit}>
+      <form  onSubmit={onSubmit}>
       
         <div className="grey-text">
           <MDBInput label="Search github users" icon="user"  type="text" validate error="wrong"
-            success="right"  name="text" value={this.state.text} onChange={this.onChange} />
+            success="right"  name="text" value={text} onChange={onChange} />
         
         </div>
         <div className="text-center">
@@ -60,8 +54,8 @@ return (
     </MDBCol>
   </MDBRow>
 </MDBContainer>
-);
-    }
-};
+)
+  }
+
 
 export default FormPage;

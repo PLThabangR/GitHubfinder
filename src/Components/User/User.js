@@ -1,18 +1,18 @@
-import React, { Component, Fragment } from 'react'
+import React, { useEffect,useState, Fragment } from 'react'
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBView, MDBIcon } from 'mdbreact';
 import Spinner from "./../Layout/spinner";
 import {Link} from 'react-router-dom';
 import Repos from '../Repos/Repos';
 import { MDBBadge } from "mdbreact";
-export class User extends Component {
+const User =({user,getSingleUser,getUserRepos,repos,loading,match})=> {
   
-  componentDidMount(){
-      //fetching the single user using passed params
-      this.props.getSingleUser(this.props.match.params.login);
-      this.props.getUserRepos(this.props.match.params.login);
-      
-  }
-    render() {
+  useEffect(()=>{
+   //fetching the single user using passed params
+   getSingleUser(match.params.login);
+   getUserRepos(match.params.login);
+   //eslint-disable-next-line 
+  },[]);
+    
         const {
             name,
             avatar_url,
@@ -27,11 +27,8 @@ export class User extends Component {
             public_gists,
             company,
             hiraeble
-        } = this.props.user;
+        } = user;
 
-    
-
-        const {loading} =this.props.loading;
            
         if(loading ) return <Spinner/>;
         return (
@@ -126,10 +123,10 @@ export class User extends Component {
               </MDBCardBody>
               </MDBCard>
               <br></br>
-              <Repos repos={this.props.repos}/>
+              <Repos repos={repos}/>
             </Fragment>
         )
-    }
+    
 }
 
 export default User
