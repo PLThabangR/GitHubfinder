@@ -7,7 +7,8 @@ const AlertPage = ({alert}) => {
     <MDBContainer>
       
       <MDBAlert color="danger" >
-       {alert.msg}
+     
+        {alert.msg}
       </MDBAlert>
       
     </MDBContainer>

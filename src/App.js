@@ -1,4 +1,4 @@
-import React, {Fragment,Component } from "react";
+import React, {Fragment,useState} from "react";
 import "./index.css";
 import Navbar from "./Components/Layout/Navbar";
 import Users from "./Components/User/Users";
@@ -8,69 +8,63 @@ import Alert from './Components/Layout/Alert';
 import About from './Components/Pages/About';
 import User from './Components/User/User'
 import  {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-class App extends Component {
- 
-  state ={
-    users:[],
-    user:{},
-    loading: false,
-    alert:null,
-    repos:[]
-  }
-async componentDidMount(){
- 
-  this.setState({loading:true});
- const res= await axios.get(`https://api.github.com/users?cleint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
-client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-
- this.setState({users:res.data,loading:false});
-}
-//Get users
-searchUsers =async userName=>{
+const  App =()=> {
+  const [users,setUsers] = useState([]);
+  const [user,setUser] = useState({});
+  const [loading,setloading] = useState(false);
+  const [alert,setAlert] = useState(null);
+  const [repos,setRepos] = useState([]);
   
-  this.setState({loading:true})
 
+//Get users
+const searchUsers =async userName=>{
+  
+  setloading('true');
+  
   const res= await axios.get(`https://api.github.com/search/users?q=${userName}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
   
-   this.setState({users:res.data.items,loading:false});
+  setUsers(res.data.items);
+  setloading(false);
+  
+ 
 
 }
 //Get single github user
-getSingleUser =async (userName) =>{
-  this.setState({loading:true})
-
+const getSingleUser =async (userName) =>{
+  setloading(true);
+  
   const res= await axios.get(`https://api.github.com/users/${userName}?&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
   
-  console.log(res.data)
-   this.setState({user:res.data,loading:false});
+   setUser(res.data);
+   setloading(false);
+   
 }
 
 //get each users repository details
-getUserRepos =async (userName) =>{
-  this.setState({loading:true})
+const getUserRepos =async (userName) =>{
+  setloading(true);
 
   const res= await axios.get(`https://api.github.com/users/${userName}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
   client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-  
-  console.log(res.data)
-   this.setState({repos:res.data,loading:false});
+  setRepos(res.data)
+  setloading(true);
 }
 
 //Clear state values
-clearUsers=()=>{
+const clearUsers=()=>{
 
-  this.setState({users:[],loading:false})
+  setUsers([]);
+  setloading(false);
 }
 
-setAlert =(msg)=>{
- this.setState({alert:{msg}})
-
- setTimeout(()=> this.setState({alert:null}),5000)
+const showAlert =(msg)=>{
+ setAlert({msg});
+ setTimeout(()=> setAlert(null),5000)
 }
-  render() {
-   const {users,loading,alert,user,repos} =this.state;
+
+
     return (
 
       <Router>
@@ -83,9 +77,9 @@ setAlert =(msg)=>{
      <Route exact path='/' render={props=>(
        <Fragment>
        <Alert alert={alert}/>
-       <Search searchUsers={this.searchUsers}  clearUsers={this.clearUsers} 
+       <Search searchUsers={searchUsers}  clearUsers={clearUsers} 
        showClear={users.length>0 ?true:false}
-       setAlert={this.setAlert}
+       showAlert={showAlert}
        />
       <Users users={users} loading={loading}  />
       </Fragment>)}/>
@@ -96,8 +90,8 @@ setAlert =(msg)=>{
       />
 
       <Route exact path='/User/:login' render={props =>(
-        <User {...props } getSingleUser={this.getSingleUser} user={user}
-        loading={loading} getUserRepos={this.getUserRepos}
+        <User {...props } getSingleUser={getSingleUser} user={user}
+        loading={loading} getUserRepos={getUserRepos}
         repos={repos}/>
       )}/>
      </Switch>
@@ -106,7 +100,7 @@ setAlert =(msg)=>{
       </Fragment>
       </Router>
     );
-  }
+  
 }
 
 export default App;

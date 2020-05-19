@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBInput } from 'mdbreact';
 
-const FormPage =({showClear,searchUsers,clearUsers,setAlert})=> {
+const FormPage =({showClear,searchUsers,clearUsers,showAlert})=> {
 
   const[text,setText] =useState('');
  
@@ -12,7 +12,8 @@ setText(e.target.value);
 const onSubmit =(e)=>{
   e.preventDefault();
   if(text===''){
-    setAlert('Please enter something');
+    showAlert('Please enter something');
+  
   }else{
     searchUsers(text);
     setText('');
@@ -54,7 +55,7 @@ return (
     </MDBCol>
   </MDBRow>
 </MDBContainer>
-)
+);
   }
 
 

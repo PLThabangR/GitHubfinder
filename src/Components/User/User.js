@@ -9,8 +9,10 @@ const User =({user,getSingleUser,getUserRepos,repos,loading,match})=> {
   useEffect(()=>{
    //fetching the single user using passed params
    getSingleUser(match.params.login);
+  
    getUserRepos(match.params.login);
-   //eslint-disable-next-line 
+
+
   },[]);
     
         const {
@@ -29,7 +31,9 @@ const User =({user,getSingleUser,getUserRepos,repos,loading,match})=> {
             hiraeble
         } = user;
 
-           
+          
+          loading=false;
+         
         if(loading ) return <Spinner/>;
         return (
             <Fragment>
