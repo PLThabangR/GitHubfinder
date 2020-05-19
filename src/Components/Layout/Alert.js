@@ -1,7 +1,10 @@
-import React from "react";
+import React,{useContext} from "react";
 import { MDBContainer, MDBAlert } from 'mdbreact';
+import AlertContext from '../../Context/AlertContext/AlertContext';
+const AlertPage = () => {
+  const alertContext =useContext(AlertContext);
 
-const AlertPage = ({alert}) => {
+  const {alert} =alertContext
   return (
       alert !==  null && (
     <MDBContainer>

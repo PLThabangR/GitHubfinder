@@ -1,13 +1,13 @@
 import React ,{useReducer} from 'react';
 import axios from 'axios';
-import GithubContext from './githubContext';
 import GithubReducer from './githubReducer';
 import {SEARCH_USERS,
     REMOVE_ALERT,
     GET_USER,
     GET_REPOS,
     SET_LOADING,
-    SET_ALERT,} from '../types';
+    SET_ALERT,
+    CLEAR_USERS,} from '../types';
 import githubContext from './githubContext';
 
     //Create initial state
@@ -38,10 +38,35 @@ import githubContext from './githubContext';
           }
 
         //get user
-
+        const getSingleUser =async (userName) =>{
+            setloading();
+            
+            const res= await axios.get(`https://api.github.com/users/${userName}?&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
+            client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+            
+          dispatch({
+              type: GET_USER,
+              payload :res.data
+          })
+             
+          }
         //get repos
+        const getUserRepos =async (userName) =>{
+            setloading();
+          
+            const res= await axios.get(`https://api.github.com/users/${userName}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
+            client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+           dispatch({
+               type:GET_REPOS,
+               payload :res.data
+           })
+          }
+          
 
         //clear Users
+        const clearUsers=()=> dispatch({type:CLEAR_USERS})
+
+          
 
         //set loading
         const setloading =() => dispatch({type:SET_LOADING});
@@ -52,7 +77,10 @@ import githubContext from './githubContext';
             user:state.user,
             repos:state.repos,
             loading:state.loading,
-            searchUsers
+            searchUsers,
+            clearUsers,
+            getSingleUser,
+            getUserRepos
 
 
         }}

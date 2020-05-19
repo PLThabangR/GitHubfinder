@@ -1,11 +1,15 @@
-import React, { useEffect,useState, Fragment } from 'react'
+import React, { useEffect,useState, Fragment,useContext } from 'react'
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBView, MDBIcon } from 'mdbreact';
 import Spinner from "./../Layout/spinner";
 import {Link} from 'react-router-dom';
 import Repos from '../Repos/Repos';
 import { MDBBadge } from "mdbreact";
-const User =({user,getSingleUser,getUserRepos,repos,loading,match})=> {
-  
+import GithubContext from '../../Context/github/githubContext';
+
+const User =({match})=> {
+  const githubContext = useContext(GithubContext);
+  //Destructure the context
+  const {getSingleUser,loading,user,getUserRepos,repos} = githubContext;
   useEffect(()=>{
    //fetching the single user using passed params
    getSingleUser(match.params.login);
@@ -32,7 +36,7 @@ const User =({user,getSingleUser,getUserRepos,repos,loading,match})=> {
         } = user;
 
           
-          loading=false;
+    
          
         if(loading ) return <Spinner/>;
         return (

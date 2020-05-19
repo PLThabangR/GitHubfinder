@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import UserItem from './UserItem';
 import Spinner from '../Layout/spinner'
+import GithubContext from '../../Context/github/githubContext';
 
+ const Users =()=> {
+   const githubContext = useContext(GithubContext);
+    //Destruct the context api
+    const {loading,users} =githubContext;
 
- const Users =({users,loading})=> {
-   
     if(loading){
         return <Spinner/>
     }else{

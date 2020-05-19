@@ -3,11 +3,31 @@ import {SEARCH_USERS,
     GET_USER,
     GET_REPOS,
     SET_LOADING,
-    SET_ALERT,} from '../types';
+    SET_ALERT,
+    CLEAR_USERS,} from '../types';
 
 
     export default (state,action)=>{
         switch(action.type){
+            case GET_REPOS:
+                return{
+                    ...state,
+                    repos:action.payload,
+                    loading:false
+                }
+            case GET_USER:
+                return{
+                    ...state,
+                    user:action.payload,
+                    loading:false
+                }
+            case CLEAR_USERS:
+                return{
+                    ...state,
+                    users:[],
+                    loading:false
+                }
+
                case SEARCH_USERS:
                    return{
                        ...state,
