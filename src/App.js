@@ -6,8 +6,10 @@ import axios from 'axios';
 import Search from './Components/User/Search';
 import Alert from './Components/Layout/Alert';
 import About from './Components/Pages/About';
-import User from './Components/User/User'
+import User from './Components/User/User';
+import GithubState from './Context/github/gitHubState';
 import  {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 const  App =()=> {
   const [users,setUsers] = useState([]);
   const [user,setUser] = useState({});
@@ -16,20 +18,7 @@ const  App =()=> {
   const [repos,setRepos] = useState([]);
   
 
-//Get users
-const searchUsers =async userName=>{
-  
-  setloading('true');
-  
-  const res= await axios.get(`https://api.github.com/search/users?q=${userName}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID} &
-  client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-  
-  setUsers(res.data.items);
-  setloading(false);
-  
- 
 
-}
 //Get single github user
 const getSingleUser =async (userName) =>{
   setloading(true);
@@ -66,7 +55,7 @@ const showAlert =(msg)=>{
 
 
     return (
-
+      <GithubState>
       <Router>
       <Fragment>
       <Navbar  title="Github finder"/>
@@ -77,7 +66,7 @@ const showAlert =(msg)=>{
      <Route exact path='/' render={props=>(
        <Fragment>
        <Alert alert={alert}/>
-       <Search searchUsers={searchUsers}  clearUsers={clearUsers} 
+       <Search   clearUsers={clearUsers} 
        showClear={users.length>0 ?true:false}
        showAlert={showAlert}
        />
@@ -99,6 +88,7 @@ const showAlert =(msg)=>{
        </div>
       </Fragment>
       </Router>
+      </GithubState>
     );
   
 }

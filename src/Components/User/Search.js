@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useState,useContext} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBInput } from 'mdbreact';
+import GithubContext from '../../Context/github/githubContext';
+const FormPage =({showClear,clearUsers,showAlert})=> {
 
-const FormPage =({showClear,searchUsers,clearUsers,showAlert})=> {
-
+  const githubContext =useContext(GithubContext);
   const[text,setText] =useState('');
  
 const onChange=(e)=>{
@@ -15,7 +16,7 @@ const onSubmit =(e)=>{
     showAlert('Please enter something');
   
   }else{
-    searchUsers(text);
+    githubContext.searchUsers(text);
     setText('');
 }
 }
