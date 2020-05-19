@@ -2,7 +2,7 @@ import React, {useState,useContext} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBInput } from 'mdbreact';
 import GithubContext from '../../Context/github/githubContext';
 import Alertcontext from '../../Context/AlertContext/AlertContext';
-const FormPage =(showAlert)=> {
+const FormPage =()=> {
 
   const githubContext =useContext(GithubContext);
   const alertContext  =useContext(Alertcontext)
